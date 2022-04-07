@@ -3,7 +3,7 @@ import pandas as pd
 
 # Network -> boxscore_{ gameId }.json
 
-gameId = '0022101193'
+gameId = '0022101195'
 
 game_stats_url = 'https://cdn.nba.com/static/json/liveData/boxscore/boxscore_' + gameId + '.json' #0022101190 = gameId
 
@@ -29,6 +29,7 @@ away_players = response['game']['awayTeam']['players']
 print()
 print('Home Team')
 print()
+
 count = 0
 for player in home_players:
     print(str(home_players[count]['firstName']) + " " + str(home_players[count]['familyName']) + " Points: " + str(home_players[count]['statistics']['points']))

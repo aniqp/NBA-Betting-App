@@ -20,9 +20,7 @@ headers  = {
 }
 
 
-
 response = requests.get(url = player_info_url, headers = headers).json()
-
 
 player_info = response['resultSets'][0]['rowSet']
 
@@ -94,7 +92,6 @@ columns_list = [
     "CFID",
     "CFPARAMS"
 ]
-
 
 nba_df = pd.DataFrame(player_info, columns = columns_list)
 
