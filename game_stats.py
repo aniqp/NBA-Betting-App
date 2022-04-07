@@ -20,6 +20,7 @@ headers  = {
     'Accept-Language': 'en-US,en;q=0.9',
 }
 
+
 response = requests.get(url = game_stats_url, headers = headers).json()
 
 home_players = response['game']['homeTeam']['players']
