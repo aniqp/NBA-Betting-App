@@ -24,6 +24,8 @@ response = requests.get(url = player_info_url, headers = headers).json()
 
 player_info = response['resultSets'][0]['rowSet']
 
+print(player_info[0], player_info[1])
+
 columns_list = [
     "PLAYER_ID",
     "NAME",
@@ -124,7 +126,7 @@ nba_df_imp = nba_df[
     ] 
 ]
 
-print(nba_df_imp.sample(10))
+print(nba_df_imp.sample(1))
 
-nba_df_imp.to_csv('traditional_stats.csv', index = False)
+# nba_df_imp.to_csv('traditional_stats.csv', index = False)
 

@@ -1,7 +1,9 @@
 import requests
 import pandas as pd
+import numpy as np
 
-gameId = '0022101195'
+
+gameId = '0022101197'
 
 box_score_url = 'https://cdn.nba.com/static/json/liveData/boxscore/boxscore_' + gameId + '.json' #0022101190 = gameId
 
@@ -23,29 +25,77 @@ response = requests.get(url = box_score_url, headers = headers).json()
 homeTeam = response['game']['homeTeam']
 awayTeam = response['game']['awayTeam']
 
-players = []
-count = 0
-for player in awayTeam:
-    players.append(awayTeam['players'][count]['nameI'])
-    count += 1
+def get_box_score(team):
+    count = 0
+    players = team['players']
+    array = []
+    large_array = []
 
-print(players)
+    for player in players:
+        statistics = []
+        statistics.append(players[count]['nameI'])
+        array = players[count]['statistics']
+        for key, value in array.items():
+            statistics.append(value)
+        large_array.append(statistics)
+        count += 1 
 
-statistics = awayTeam['players'][0]['statistics']
-print(statistics)
+    columns_list = [
+        'NAME',
+        'AST',
+        'BLK',
+        'BLKA',
+        'FGA',
+        'FGM',
+        'FG%',
+        'FD',
+        'OF',
+        'PF',
+        'TF',
+        'FTA',
+        'FTM',
+        'FT%',
+        '-',
+        'mins',
+        'minsCalc',
+        '+',
+        '+/-',
+        'PTS',
+        'FBP',
+        'PIP',
+        'SCP',
+        'DR',
+        'OR',
+        'TR',
+        'STL',
+        'FG3A',
+        'FG3M',
+        'FG3%',
+        'TOV',
+        'FG2A',
+        'FG2M',
+        'FG2%',
+    ]
 
-# columns_list = [
-#     'teamId'
-#     'teamName',
-#     'teamCity',
-#     'teamTricode',
-#     'score',
-#     'inBonus',
-#     'timeoutsRemaining',
-#     'players["name"]'
-# ]
+    nba_df = pd.DataFrame(large_array, columns = columns_list)
 
-# nba_df = pd.DataFrame(awayTeam, columns = columns_list, index = [0])
+    nba_df_imp = nba_df[
+    [   "NAME",
+        "PTS",
+        "AST",
+        "TR",
+        "BLK",
+        "STL",
+        "FG%",
+        "FG3%",
+        "TOV"
+        ]
+    ]
 
+    print(nba_df_imp)
 
-# print(nba_df)
+    #nba_df.to_csv('box_score.csv', index = False)
+
+get_box_score(homeTeam)
+print()
+get_box_score(awayTeam)
