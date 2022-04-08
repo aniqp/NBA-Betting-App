@@ -1,30 +1,36 @@
 import requests
 import pandas as pd
 
-gameIDs = []
+def get_gameIDs():
 
-game_id_url = "https://cdn.nba.com/static/json/liveData/scoreboard/todaysScoreboard_00.json"
+    gameIDs = []
 
-headers  = {
-    'Connection': 'keep-alive',
-    'Accept': 'application/json, text/plain, */*',
-    'x-nba-stats-token': 'true',
-    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36',
-    'x-nba-stats-origin': 'stats',
-    'Sec-Fetch-Site': 'same-origin',
-    'Sec-Fetch-Mode': 'cors',
-    'Referer': 'https://stats.nba.com/',
-    'Accept-Encoding': 'gzip, deflate, br',
-    'Accept-Language': 'en-US,en;q=0.9',
-}
+    game_id_url = "https://cdn.nba.com/static/json/liveData/scoreboard/todaysScoreboard_00.json"
 
-response = requests.get(url = game_id_url, headers = headers).json()
+    headers  = {
+        'Connection': 'keep-alive',
+        'Accept': 'application/json, text/plain, */*',
+        'x-nba-stats-token': 'true',
+        'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36',
+        'x-nba-stats-origin': 'stats',
+        'Sec-Fetch-Site': 'same-origin',
+        'Sec-Fetch-Mode': 'cors',
+        'Referer': 'https://stats.nba.com/',
+        'Accept-Encoding': 'gzip, deflate, br',
+        'Accept-Language': 'en-US,en;q=0.9',
+    }
 
-games = response['scoreboard']['games']
+    response = requests.get(url = game_id_url, headers = headers).json()
 
-count = 0
-for game in games:
-    gameIDs.append(games[count]['gameId'])
-    count += 1
+    games = response['scoreboard']['games']
+
+    print("Today's Games")
+    count = 0
+    for game in games:
+        gameIDs.append(games[count]['gameId'])
+        awayTeam = games[count]['awayTeam']['teamName']
+        homeTeam = games[count]['homeTeam']['teamName']
+        print(str('GameID: ' + gameIDs[count] + '  ' + awayTeam + ' @ ' + homeTeam))
+        count += 1
+
     
-print(gameIDs)
