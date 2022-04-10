@@ -11,7 +11,7 @@ def get_winner(game_id):
         'x-nba-stats-token': 'true',
         'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36',
         'x-nba-stats-origin': 'stats',
-        'Sec-Fetch-Site': 'same-origin',
+        'S~ec-Fetch-Site': 'same-origin',
         'Sec-Fetch-Mode': 'cors',
         'Referer': 'https://stats.nba.com/',
         'Accept-Encoding': 'gzip, deflate, br',
@@ -24,8 +24,8 @@ def get_winner(game_id):
     away_score = response['game']['awayTeam']['score']
 
     if home_score > away_score:
-        print(response['game']['homeTeam']['teamName'], 'won' )
+        print(response['game']['homeTeam']['teamId'], 'won' )
     else:
-       print(response['game']['awayTeam']['teamName'], 'won' )
+       print(response['game']['awayTeam']['teamId'], 'won' )
 
 get_winner('0022101213')

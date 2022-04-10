@@ -1,9 +1,13 @@
 import requests
 import pandas as pd
 
+def sort_by_stat(df, stat):
+    return df.sort_values(by=[stat], ascending = False)
 
-def get_best_player(team_id):
+# get best player from a certain team
+def get_best_player(team_id, stat):
 
+    # stats.nba.com -> players -> traditional stats
     player_info_url = 'https://stats.nba.com/stats/leaguedashplayerstats?College=&Conference=&Country=&DateFrom=&DateTo=&Division=&DraftPick=&DraftYear=&GameScope=&GameSegment=&Height=&LastNGames=0&LeagueID=00&Location=&MeasureType=Base&Month=0&OpponentTeamID=0&Outcome=&PORound=0&PaceAdjust=N&PerMode=PerGame&Period=0&PlayerExperience=&PlayerPosition=&PlusMinus=N&Rank=N&Season=2021-22&SeasonSegment=&SeasonType=Regular+Season&ShotClockRange=&StarterBench=&TeamID=0&TwoWay=0&VsConference=&VsDivision=&Weight='
 
     headers  = {
@@ -36,18 +40,34 @@ def get_best_player(team_id):
         'PLUS_MINUS' : '+/-'
         })
 
-    nba_df = nba_df[nba_df['TEAM_ID'] == team_id].sort_values(by=['PTS'], ascending= False)[['NAME','PTS']]
+    nba_df = nba_df[nba_df['TEAM_ID'] == team_id]
+    # sort by stat passed by user
+    nba_df = sort_by_stat(nba_df, stat)
+    nba_df_imp = nba_df[[
+        'NAME',
+        'PTS',
+        'AST',
+        'REB',
+        'STL',
+        'BLK',
+        'TOV',
+        'PF'
+    ]]
 
-    row1 = nba_df.iloc[0]
+    row1 = nba_df_imp.iloc[0] # getting highest stat player
 
 
-    player_name = {
+    player_name = {     # saving to dictionary
         'player': row1['NAME'],
-        'points': row1['PTS']
+        'points': row1['PTS'],
+        'assists': row1['AST'],
+        'rebounds': row1['REB'],
+        'steals': row1['STL'],
+        'blocks': row1['BLK'],
+        'turnovers': row1['TOV'],
+        'fouls': row1['PF']
     }
 
     return player_name
 
     # nba_df_imp.to_csv('traditional_stats.csv', index = False)
-
-get_best_player(1610612761)
