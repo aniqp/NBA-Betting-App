@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 
 
-gameId = '0022101197'
+gameId = '0022101215'
 
 box_score_url = 'https://cdn.nba.com/static/json/liveData/boxscore/boxscore_' + gameId + '.json' #0022101190 = gameId
 

@@ -1,7 +1,7 @@
 import requests
 import pandas as pd
 
-def get_gameIDs():
+def upcoming_games():
 
     gameIDs = []
 
@@ -33,4 +33,4 @@ def get_gameIDs():
         print(str('GameID: ' + gameIDs[count] + '  ' + awayTeam + ' @ ' + homeTeam))
         count += 1
 
-    
+upcoming_games()
