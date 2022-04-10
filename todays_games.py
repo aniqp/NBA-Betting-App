@@ -1,9 +1,7 @@
 import requests
 import pandas as pd
 
-def upcoming_games():
-
-    gameIDs = []
+def todays_games():
 
     game_id_url = "https://cdn.nba.com/static/json/liveData/scoreboard/todaysScoreboard_00.json"
 
@@ -24,13 +22,12 @@ def upcoming_games():
 
     games = response['scoreboard']['games']
 
-    print("Today's Games")
+    game_ids = {}
+
     count = 0
     for game in games:
-        gameIDs.append(games[count]['gameId'])
-        awayTeam = games[count]['awayTeam']['teamName']
-        homeTeam = games[count]['homeTeam']['teamName']
-        print(str('GameID: ' + gameIDs[count] + '  ' + awayTeam + ' @ ' + homeTeam))
-        count += 1
-
-upcoming_games()
+        away_team_id = games[count]['awayTeam']['teamId']
+        home_team_id = games[count]['homeTeam']['teamId']
+        game_ids.update( { games[count]['gameId']: {'home_team': home_team_id, 'away_team': away_team_id }} )
+        count += 1 
+    return(game_ids)

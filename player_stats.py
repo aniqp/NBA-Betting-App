@@ -1,3 +1,4 @@
+from turtle import clear
 import requests
 import pandas as pd
 
@@ -102,5 +103,40 @@ columns_list = [
 ]
 
 nba_df = pd.DataFrame(ovr_base_info, columns = columns_list)
+nba_df = nba_df.rename(columns = {
+    'TEAM_ABBREVIATION' : 'TEAM',
+    'FG_PCT' : 'FG%',
+    'FG3_PCT' : 'FG3%',
+    'FT_PCT' : 'FT%',
+    'PLUS_MINUS' : '+/-'
+    })
 
-print(nba_df)
+nba_df_imp = nba_df[
+[   'TEAM',
+    'GP',
+    'MIN',
+    'PTS',
+    'AST',
+    'OREB',
+    'DREB',
+    'REB', 
+    'STL', 
+    'BLK', 
+    'TOV',
+    'PF', 
+    '+/-',
+    'DD2',
+    'TD3',
+    'FGM', 
+    'FGA',
+    'FG%', 
+    'FG3M', 
+    'FG3A',
+    'FG3%',
+    'FTM',
+    'FTA',
+    'FT%',
+    ] 
+]
+
+print(nba_df_imp)

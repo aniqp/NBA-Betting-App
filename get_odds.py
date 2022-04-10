@@ -1,6 +1,6 @@
 import requests
 import pandas as pd
-from get_team_name import *
+from get_team_credentials import *
 
 
 def get_odds():

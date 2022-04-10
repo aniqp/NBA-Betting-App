@@ -1,10 +1,8 @@
 import requests
 import pandas as pd
 
-season_id = '2021-22'
-per_mode = 'PerGame'
 
-player_info_url = 'https://stats.nba.com/stats/leaguedashplayerstats?College=&Conference=&Country=&DateFrom=&DateTo=&Division=&DraftPick=&DraftYear=&GameScope=&GameSegment=&Height=&LastNGames=0&LeagueID=00&Location=&MeasureType=Base&Month=0&OpponentTeamID=0&Outcome=&PORound=0&PaceAdjust=N&PerMode=' + per_mode + '&Period=0&PlayerExperience=&PlayerPosition=&PlusMinus=N&Rank=N&Season=' + season_id + '&SeasonSegment=&SeasonType=Regular+Season&ShotClockRange=&StarterBench=&TeamID=0&TwoWay=0&VsConference=&VsDivision=&Weight='
+player_info_url = 'https://stats.nba.com/stats/leaguedashplayerstats?College=&Conference=&Country=&DateFrom=&DateTo=&Division=&DraftPick=&DraftYear=&GameScope=&GameSegment=&Height=&LastNGames=0&LeagueID=00&Location=&MeasureType=Base&Month=0&OpponentTeamID=0&Outcome=&PORound=0&PaceAdjust=N&PerMode=PerGame&Period=0&PlayerExperience=&PlayerPosition=&PlusMinus=N&Rank=N&Season=2021-22&SeasonSegment=&SeasonType=Regular+Season&ShotClockRange=&StarterBench=&TeamID=0&TwoWay=0&VsConference=&VsDivision=&Weight='
 
 headers  = {
     'Connection': 'keep-alive',
@@ -25,76 +23,6 @@ response = requests.get(url = player_info_url, headers = headers).json()
 player_info = response['resultSets'][0]['rowSet']
 
 columns_list = response['resultSets'][0]['headers']
-# [
-#     "PLAYER_ID",
-#     "NAME",
-#     "NICKNAME",
-#     "TEAM_ID",
-#     "TEAM",
-#     "AGE",
-#     "GP",
-#     "W",
-#     "L",
-#     "W_PCT",
-#     "MIN",
-#     "FGM",
-#     "FGA",
-#     "FG%",
-#     "FG3M",
-#     "FG3A",
-#     "FG3%",
-#     "FTM",
-#     "FTA",
-#     "FT%",
-#     "OREB",
-#     "DREB",
-#     "REB",
-#     "AST",
-#     "TOV",
-#     "STL",
-#     "BLK",
-#     "BLKA",
-#     "PF",
-#     "PFD",
-#     "PTS",
-#     "+/-",
-#     "NBA_FANTASY_PTS",
-#     "DD2",
-#     "TD3",
-#     "WNBA_FANTASY_PTS",
-#     "GP_RANK",
-#     "W_RANK",
-#     "L_RANK",
-#     "W_PCT_RANK",
-#     "MIN_RANK",
-#     "FGM_RANK",
-#     "FGA_RANK",
-#     "FG_PCT_RANK",
-#     "FG3M_RANK",
-#     "FG3A_RANK",
-#     "FG3_PCT_RANK",
-#     "FTM_RANK",
-#     "FTA_RANK",
-#     "FT_PCT_RANK",
-#     "OREB_RANK",
-#     "DREB_RANK",
-#     "REB_RANK",
-#     "AST_RANK",
-#     "TOV_RANK",
-#     "STL_RANK",
-#     "BLK_RANK",
-#     "BLKA_RANK",
-#     "PF_RANK",
-#     "PFD_RANK",
-#     "PTS_RANK",
-#     "PLUS_MINUS_RANK",
-#     "NBA_FANTASY_PTS_RANK",
-#     "DD2_RANK",
-#     "TD3_RANK",
-#     "WNBA_FANTASY_PTS_RANK",
-#     "CFID",
-#     "CFPARAMS",
-# ]
 
 nba_df = pd.DataFrame(player_info, columns = columns_list)
 nba_df = nba_df.rename(columns = {
@@ -135,7 +63,17 @@ nba_df_imp = nba_df[
     ] 
 ]
 
-print(nba_df_imp.sample(10))
+nba_df_imp = nba_df_imp[nba_df_imp['TEAM'] == 'IND'].sort_values(by=['PTS'], ascending= False)[['NAME','PTS']]
+
+row1 = nba_df_imp.iloc[0]
+
+
+player_name = {
+    'player': row1['NAME'],
+    'numPoints': row1['PTS']
+}
+
+print(player_name)
 
 # nba_df_imp.to_csv('traditional_stats.csv', index = False)
 
