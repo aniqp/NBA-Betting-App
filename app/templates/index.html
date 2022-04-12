@@ -1,0 +1,23 @@
+{% extends "main/base.html" %}
+
+{% block title %} Today's Games {% endblock %}
+
+{% block main %}
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h1>Today's Games</h1>
+            <hr>
+
+            <ul>
+                {% for k, v in games.items() %}
+                <li>{{ v['away_team'] }} @ {{ v['home_team'] }}</li>
+                <a href="games/{{ k }}"><button class="btn btn-primary">Bet on this game!</button></a>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

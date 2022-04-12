@@ -46,5 +46,3 @@ def get_id(team_name):
     except:
         return "id not found"
 
-print(get_id('Raptors'))
-print(get_team_name(1610612755))
