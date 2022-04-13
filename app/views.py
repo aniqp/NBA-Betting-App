@@ -45,3 +45,7 @@ def games(game_id):
         home_team = home_team,
         away_team = away_team
     )
+
+@app.route("/sign-up")
+def sign_up():
+    return render_template("sign_up.html")
