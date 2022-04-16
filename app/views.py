@@ -48,7 +48,8 @@ def games(game_id):
         away_assists = away_assists, 
         home_assists = home_assists,
         home_team = home_team,
-        away_team = away_team
+        away_team = away_team,
+        user = current_user
     )
 
 @app.route("/sign-up", methods = ['GET', 'POST'])
