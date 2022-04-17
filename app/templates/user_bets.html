@@ -12,7 +12,7 @@
             <ul>
             </ul>
             <p> {% for bet in user.bets %}
-                { {bet.game_id} {bet.player_name} {bet.statistic} {bet.over_statistic}}
+                {{bet.game_id}} {{bet.player_name}} {{bet.statistic}} {{bet.over_statistic}}
                 {% endfor %}</p>
         </div>
     </div>

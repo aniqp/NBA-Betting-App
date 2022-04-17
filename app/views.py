@@ -67,17 +67,16 @@ def games(game_id):
         # count +=1
 
         for bet in bet_list:
-             if bet.get(list(bet.keys())[0]) is not None:
-                 db.session.add(Bet(
-                 game_id = game_id,
-                 player_name = list(bet.keys())[0].name,
-                #  statistic = list(bet.keys())[0].statistic,
-                #  over_statistic = bool(convert_string_to_boolean((bet.get(list(bet.keys())[0])))),
-                 user_id = current_user
-                 ))
-                 db.create_all
-                 db.session.commit()
-
+            if bet.get(list(bet.keys())[0]) is not None:
+                db.session.add(Bet(
+                game_id = game_id,
+                player_name = list(bet.keys())[0].name,
+                statistic = list(bet.keys())[0].statistic,
+                over_statistic = convert_string_to_boolean((bet.get(list(bet.keys())[0]))),
+                user_id = current_user.id
+                ))
+                db.create_all
+                db.session.commit()
         flash('Bet(s) made!', category = 'success')
 
     return render_template(
