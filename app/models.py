@@ -10,10 +10,8 @@ class Bet(db.Model):
     player_name = db.Column(db.String(500))
     statistic = db.Column(db.String(100))
     over_statistic = db.Column(db.Boolean, default = False, nullable = False)
-    win_bet = db.Column(db.Boolean, nullable = True)
-    date = db.Column(db.DateTime(timezone=True), default=func.now)
+    date = db.Column(db.DateTime(timezone=True), server_default=func.now())
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-
 
 # when you want to make a new database model (store a different type of object), have it inherit from db.model
 # usermixin just for user model
