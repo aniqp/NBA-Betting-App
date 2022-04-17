@@ -16,7 +16,6 @@ def index():
 
     return render_template("index.html", games = games)
 
-
 @app.route("/games/<string:game_id>/")
 def games(game_id):
     teams = teams_from_game_id(game_id)

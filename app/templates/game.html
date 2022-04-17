@@ -7,14 +7,21 @@
 <div class="container">
     <div class="row">
         <div class="col">
-            <h1><img style="max-width: 100px" src="{{ url_for('static', filename='logos/raptors_logo.png') }}"> &nbsp; &nbsp; {{ away_team }} @ {{ home_team }} &nbsp; &nbsp; <img style="max-width: 100px" src="{{ url_for('static', filename='logos/celtics_logo.png') }}"></h1>
+            <h1><img style="max-width: 100px; max-height: 100px" src="{{ url_for('static', filename='logos/' + away_team + '_logo.png') }}"> 
+                &nbsp; &nbsp; 
+                {{ away_team }} @ {{ home_team }} 
+                &nbsp; &nbsp; 
+                <img style="max-width: 100px; max-height: 100px" src="{{ url_for('static', filename='logos/' + home_team + '_logo.png') }}">
             <hr>
             <br>
-            <h4>Will {{ home_pts.name }} score {{ home_pts.points|round|int }} points or more?</h4>
-            <input type="radio" name="name2" id="yes">
-            <label for="yes">YES!</label>
-            <input type="radio" name="name2" id="no">
-            <label for="no">no :(</label>
+            <div class="betcard">
+                <h4>Will {{ home_pts.name }} score {{ home_pts.points|round|int }} points or more?</h4>
+                <input type="radio" name="name2" id="yes">
+                <label for="yes">YES!</label>
+                <input type="radio" name="name2" id="no">
+                <label for="no">no :(</label>
+            </div>
+                
             <h4>Will {{ away_pts.name }} score {{ away_pts.points|round|int }} points or more?</h4>
             <input type="radio" name="name" id="yes">
             <label for="yes">YES!</label>

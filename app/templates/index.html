@@ -12,8 +12,15 @@
 
             <ul>
                 {% for k, v in games.items() %}
-                <li>{{ v['away_team'] }} @ {{ v['home_team'] }}</li>
+                <img style="max-width: 100px; max-height: 100px" src="{{ url_for('static', filename='logos/' + v['away_team'] + '_logo.png') }}">
+                <img style="max-width: 100px; max-height: 100px" src="{{ url_for('static', filename='logos/' + v['home_team'] + '_logo.png') }}">
+                
+                <br>
+                {{ v['away_team'] }}    @    {{ v['home_team'] }}
+                <br>
                 <a href="games/{{ k }}"><button class="btn btn-primary">Bet on this game!</button></a>
+                <br>
+                <br>
                 {% endfor %}
             </ul>
         </div>
