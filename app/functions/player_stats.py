@@ -138,5 +138,3 @@ nba_df_imp = nba_df[
     'FT%',
     ] 
 ]
-
-print(nba_df_imp)

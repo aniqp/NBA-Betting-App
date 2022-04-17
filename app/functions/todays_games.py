@@ -22,29 +22,30 @@ def todays_games():
 
     games = response['scoreboard']['games']
 
-    game_ids = {
-        '00222345': {
-            'home_team': 1610612754,
-            'away_team': 1610612747
-        },
-        '003242342': {
-            'home_team': 1610612741,
-            'away_team': 1610612751
-        },
-        '001231231': {
-            'home_team': 1610612738,
-            'away_team': 1610612761
-        }
-    }
+    # game_ids = {
+    #     '00222345': {
+    #         'home_team': 1610612755,
+    #         'away_team': 1610612741
+    #     },
+    #     '003242342': {
+    #         'home_team': 1610612748,
+    #         'away_team': 1610612758
+    #     },
+    #     '001231231': {
+    #         'home_team': 1610612738,
+    #         'away_team': 1610612761
+    #     }
+    # }
 
-    # game_ids = {}
-    # count = 0
-    # for game in games:
-    #     away_team_id = games[count]['awayTeam']['teamId']
-    #     home_team_id = games[count]['homeTeam']['teamId']
-    #     game_ids.update( { games[count]['gameId']: {'home_team': home_team_id, 'away_team': away_team_id }} )
-    #     count += 1 
-    
+    game_ids = {}
+
+    count = 0
+    for game in games:
+        away_team_id = games[count]['awayTeam']['teamId']
+        home_team_id = games[count]['homeTeam']['teamId']
+        game_ids.update( { games[count]['gameId']: {'home_team': home_team_id, 'away_team': away_team_id }} )
+        count += 1 
+        
     return(game_ids)
 
 def teams_from_game_id(game_id):
