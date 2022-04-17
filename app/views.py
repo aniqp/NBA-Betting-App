@@ -73,6 +73,7 @@ def games(game_id):
                 player_name = list(bet.keys())[0].name,
                 statistic = list(bet.keys())[0].statistic,
                 over_statistic = convert_string_to_boolean((bet.get(list(bet.keys())[0]))),
+                num_stats = list(bet.keys())[0].num_stats,
                 user_id = current_user.id
                 ))
                 db.create_all

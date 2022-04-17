@@ -11,25 +11,25 @@
                 <h1><img style="max-width: 100px" src="{{ url_for('static', filename='logos/raptors_logo.png') }}"> &nbsp; &nbsp; {{ away_team }} @ {{ home_team }} &nbsp; &nbsp; <img style="max-width: 100px" src="{{ url_for('static', filename='logos/celtics_logo.png') }}"></h1>
                 <hr>
                 <br>
-                <h4>Will {{ home_pts.name }} score {{ home_pts.points|round|int }} points or more?</h4>
+                <h4>Will {{ home_pts.name }} score {{ home_pts.num_stats|round|int }} points or more?</h4>
                 <input type="radio" name="bet1" value = "true" id="yes">
                 <label for="yes">Yes</label>
                 <input type="radio" name="bet1" value = "false" id="no">
                 <label for="no">No</label>
-                <h4>Will {{ away_pts.name }} score {{ away_pts.points|round|int }} points or more?</h4>
+                <h4>Will {{ away_pts.name }} score {{ away_pts.num_stats|round|int }} points or more?</h4>
                 <input type="radio" name="bet2" value = "true" id="yes">
                 <label for="yes">Yes</label>
                 <input type="radio" name="bet2" value = "false" id="no">
                 <label for="no">No</label>
                 <hr>
                 <br>
-                <h4>Will {{ home_rebounds.name }} get {{ home_rebounds.rebounds|round|int }} rebounds or more?
+                <h4>Will {{ home_rebounds.name }} get {{ home_rebounds.num_stats|round|int }} rebounds or more?
                 </h4>
                 <input type="radio" name="bet3" value = "true" id="yes">
                 <label for="yes">Yes</label>
                 <input type="radio" name="bet3" value = "false" id="no">
                 <label for="no">No</label>
-                <h4>Will {{ away_rebounds.name }} get {{ away_rebounds.rebounds|round|int }} rebounds or more?
+                <h4>Will {{ away_rebounds.name }} get {{ away_rebounds.num_stats|round|int }} rebounds or more?
                 </h4>
                 <input type="radio" name="bet4" value = "true" id="yes">
                 <label for="yes">Yes</label>
@@ -37,12 +37,12 @@
                 <label for="no">No</label>
                 <hr>
                 <br>
-                <h4>Will {{ home_assists.name }} get {{ home_assists.assists|round|int }} assists or more?</h4>
+                <h4>Will {{ home_assists.name }} get {{ home_assists.num_stats|round|int }} assists or more?</h4>
                 <input type="radio" name="bet5" value = "over" id="yes">
                 <label for="yes">Yes</label>
                 <input type="radio" name="bet5" value = "under" id="no">
                 <label for="no">No</label>
-                <h4>Will {{ away_assists.name }} get {{ away_assists.assists|round|int }} assists or more?</h4>
+                <h4>Will {{ away_assists.name }} get {{ away_assists.num_stats|round|int }} assists or more?</h4>
                 <input type="radio" name="bet6" value = "over" id="yes">
                 <label for="yes">Yes</label>
                 <input type="radio" name="bet6" value = "under" id="no">

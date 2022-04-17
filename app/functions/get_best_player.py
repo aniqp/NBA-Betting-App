@@ -80,22 +80,24 @@ class BetCardPoints:
     def __init__(self, name, points):
         # get best player from whichever team the user picks
         self.name = name
-        self.points = points
         self.statistic = 'PTS'
+        self.num_stats = points
 
 class BetCardAssists:
     def __init__(self, name, assists):
         # get best player from whichever team the user picks
         self.name = name
-        self.assists = assists
         self.statistic = 'AST'
+        self.num_stats = assists
+
 
 class BetCardRebounds:
     def __init__(self, name, rebounds):
         # get best player from whichever team the user picks
         self.name = name
-        self.rebounds = rebounds
         self.statistic = 'REB'
+        self.num_stats = rebounds
+
 
 def create_points_card_away(game_id):
     obj = BetCardPoints(

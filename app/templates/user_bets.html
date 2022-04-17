@@ -12,8 +12,14 @@
             <ul>
             </ul>
             <p> {% for bet in user.bets %}
-                {{bet.game_id}} {{bet.player_name}} {{bet.statistic}} {{bet.over_statistic}}
-                {% endfor %}</p>
+                <li>{% if bet.over_statistic == true %}
+                {{bet.player_name}} will get over {{bet.num_stats| round| int}} {{bet.statistic}} 
+                {% else %}
+                {{bet.player_name}} will get under {{bet.num_stats| round| int}} {{bet.statistic}} 
+                {% endif %}
+                </li>
+                {% endfor %}
+            </p>
         </div>
     </div>
 </div>

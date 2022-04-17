@@ -10,6 +10,7 @@ class Bet(db.Model):
     player_name = db.Column(db.String(500))
     statistic = db.Column(db.String(100))
     over_statistic = db.Column(db.Boolean, default = False, nullable = False)
+    num_stats = db.Column(db.Integer)
     date = db.Column(db.DateTime(timezone=True), server_default=func.now())
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
