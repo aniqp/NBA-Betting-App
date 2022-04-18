@@ -3,28 +3,39 @@
 {% block title %} Today's Games {% endblock %}
 
 {% block main %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/gamecards.css') }}">
 
 <div class="container">
     <div class="row">
         <div class="col">
             <h1>Today's Games</h1>
             <hr>
-
             <ul>
                 {% for k, v in games.items() %}
-                <img style="max-width: 100px; max-height: 100px" src="{{ url_for('static', filename='logos/' + v['away_team'] + '_logo.png') }}">
-                <img style="max-width: 100px; max-height: 100px" src="{{ url_for('static', filename='logos/' + v['home_team'] + '_logo.png') }}">
-                
-                <br>
-                {{ v['away_team'] }}    @    {{ v['home_team'] }}
-                <br>
-                <a href="games/{{ k }}"><button class="btn btn-primary">Bet on this game!</button></a>
-                <br>
-                <br>
+                <div class="game-card">
+                    <img style="max-width: 250px; max-height: 250px"
+                        src="{{ url_for('static', filename='logos/' + v['away_team'] + '_logo.png') }}">
+                    <img style="max-width: 35px; max-height: 35px"
+                        src="{{ url_for('static', filename='img/at_sign.png') }}">
+                    <img style="max-width: 250px; max-height: 250px"
+                        src="{{ url_for('static', filename='logos/' + v['home_team'] + '_logo.png') }}">
+
+                    <br>
+                    <!-- {{ v['away_team'] }} @ {{ v['home_team'] }} -->
+                    <br>
+                    <br>
+                    <a href="games/{{ k }}">
+                        <button>Bet on this game!</button>
+                    </a>
+                    <br>
+                    <br>
+                </div>
+                <hr>
                 {% endfor %}
             </ul>
         </div>
     </div>
+</div>
 </div>
 
 {% endblock %}
