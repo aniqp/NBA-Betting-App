@@ -29,7 +29,6 @@ names_dict = {
     'Trail Blazers': 1610612757,
     'Warriors': 1610612744,  
     'Wizards': 1610612764,
-
 }
 
 def get_team_name(team_id):
@@ -46,3 +45,15 @@ def get_id(team_name):
     except:
         return "id not found"
 
+
+colours_dict = {
+    1610612755: [0, 107, 182],
+    1610612761: [206, 17, 65]
+}
+
+def get_team_colour(team_id):
+    try:
+        colour = colours_dict[team_id]
+        return colour
+    except:
+        return "id not found"

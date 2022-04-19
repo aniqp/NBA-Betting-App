@@ -14,7 +14,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # define app to use with database
 db.init_app(app)
 
-from app import views
+from app import views, auth
 
 # import models file to define class before we initialize the database
 from .models import User, Bet
