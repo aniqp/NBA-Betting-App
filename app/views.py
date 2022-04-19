@@ -1,9 +1,10 @@
 from app import app
 from . import db
-from flask import render_template, request, flash, redirect, url_for
+from flask import render_template, request, flash, redirect, url_for, jsonify
 from flask_login import login_user, logout_user, login_required, current_user
 from .models import User, Bet
 from werkzeug.security import generate_password_hash, check_password_hash
+import json
 from app.functions.todays_games import *
 from app.functions.get_team_credentials import *
 from app.functions.get_best_player import *
@@ -100,3 +101,16 @@ def games(game_id):
 @app.route("/my-bets")
 def my_bets():
     return render_template("user_bets.html", user = current_user)
+
+@app.route('/delete-bet', methods = ['POST'])
+def delete_bet():
+    bet = json.loads(request.data)
+    betID = bet['betID']
+    bet = Bet.query.get(betID)
+    if bet:
+        if bet.user_id == current_user.id:
+            db.session.delete(bet)
+            db.session.commit()
+    
+    return jsonify({})
+    

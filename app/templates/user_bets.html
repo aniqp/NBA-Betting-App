@@ -13,10 +13,13 @@
             </ul>
             <p> {% for bet in user.bets %}
                 <li>{% if bet.over_statistic == true %}
-                {{bet.player_name}} will get over {{bet.num_stats| round| int}} {{bet.statistic}} 
-                {% else %}
-                {{bet.player_name}} will get under {{bet.num_stats| round| int}} {{bet.statistic}} 
-                {% endif %}
+                    {{bet.player_name}} will get over {{bet.num_stats| round| int}} {{bet.statistic}}
+                    {% else %}
+                    {{bet.player_name}} will get under {{bet.num_stats| round| int}} {{bet.statistic}}
+                    {% endif %}
+                    <button type="button" class="close" onClick="deleteBet({{ bet.id }})">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
                 </li>
                 {% endfor %}
             </p>
