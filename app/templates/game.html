@@ -1,6 +1,6 @@
 {% extends "main/base.html" %}
 
-{% block head %} 
+{% block head %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/gamecards.css') }}">
 {% endblock %}
 
@@ -11,51 +11,114 @@
 <div class="container">
     <div class="row">
         <div class="col">
-            <form method = "POST">
-                <h1><img style="max-width: 100px" src="{{ url_for('static', filename='logos/raptors_logo.png') }}"> &nbsp; &nbsp; {{ away_team }} @ {{ home_team }} &nbsp; &nbsp; <img style="max-width: 100px" src="{{ url_for('static', filename='logos/celtics_logo.png') }}"></h1>
+            <form method="POST">
+                <h1><img style="max-width: 100px"
+                        src="{{ url_for('static', filename='logos/' + away_team + '_logo.png') }}">
+                    &nbsp; &nbsp; {{ away_team }} @ {{ home_team }} &nbsp; &nbsp; <img style="max-width: 100px"
+                        src="{{ url_for('static', filename='logos/' + home_team + '_logo.png') }}"></h1>
                 <hr>
                 <br>
-                <h4>Will {{ home_pts.name }} score {{ home_pts.num_stats|round|int }} points or more?</h4>
-                <input type="radio" name="bet1" value = "true" id="yes">
-                <label for="yes">Yes</label>
-                <input type="radio" name="bet1" value = "false" id="no">
-                <label for="no">No</label>
-                <h4>Will {{ away_pts.name }} score {{ away_pts.num_stats|round|int }} points or more?</h4>
-                <input type="radio" name="bet2" value = "true" id="yes">
-                <label for="yes">Yes</label>
-                <input type="radio" name="bet2" value = "false" id="no">
-                <label for="no">No</label>
+                <div class="game_card">
+                    <h4>Will {{ home_pts.name }} score {{ home_pts.num_stats|round|int }} points or more?</h4>
+                    <input type="radio" name="bet1" value="true" id="yes">
+                    <label for="yes">Yes</label>
+                    <input type="radio" name="bet1" value="false" id="no">
+                    <label for="no">No</label>
+                    <div class="slidecontainer">
+                        <input type="range" min="1" max="100" value="50" class="slider" id="myRange"
+                            oninput="this.nextElementSibling.value = this.value">
+                        <output>50</output>
+                    </div>
+                </div>
+                <br>
+                <div class="game_card">
+                    <h4>Will {{ away_pts.name }} score {{ away_pts.num_stats|round|int }} points or more?</h4>
+                    <input type="radio" name="bet2" value="true" id="yes">
+                    <label for="yes">Yes</label>
+                    <input type="radio" name="bet2" value="false" id="no">
+                    <label for="no">No</label>
+                    <div class="slidecontainer">
+                        <input type="range" min="1" max="100" value="50" class="slider" id="myRange"
+                            oninput="this.nextElementSibling.value = this.value">
+                        <output>50</output>
+                    </div>
+                </div>
                 <hr>
                 <br>
-                <h4>Will {{ home_rebounds.name }} get {{ home_rebounds.num_stats|round|int }} rebounds or more?
-                </h4>
-                <input type="radio" name="bet3" value = "true" id="yes">
-                <label for="yes">Yes</label>
-                <input type="radio" name="bet3" value = "false" id="no">
-                <label for="no">No</label>
-                <h4>Will {{ away_rebounds.name }} get {{ away_rebounds.num_stats|round|int }} rebounds or more?
-                </h4>
-                <input type="radio" name="bet4" value = "true" id="yes">
-                <label for="yes">Yes</label>
-                <input type="radio" name="bet4" value = "false" id="no">
-                <label for="no">No</label>
+                <div class="game_card">
+                    <h4>Will {{ home_rebounds.name }} get {{ home_rebounds.num_stats|round|int }} rebounds or more?
+                    </h4>
+                    <input type="radio" name="bet3" value="true" id="yes">
+                    <label for="yes">Yes</label>
+                    <input type="radio" name="bet3" value="false" id="no">
+                    <label for="no">No</label>
+                    <div class="slidecontainer">
+                        <input type="range" min="1" max="100" value="50" class="slider" id="range"
+                            oninput="this.nextElementSibling.value = this.value">
+                        Bet Amount: <span id="value"></span>
+                    </div>
+                </div>
+                <br>
+                <div class="game_card">
+                    <h4>Will {{ away_rebounds.name }} get {{ away_rebounds.num_stats|round|int }} rebounds or more?
+                    </h4>
+                    <input type="radio" name="bet4" value="true" id="yes">
+                    <label for="yes">Yes</label>
+                    <input type="radio" name="bet4" value="false" id="no">
+                    <label for="no">No</label>
+                    <div class="slidecontainer">
+                        <input type="range" min="1" max="100" value="50" class="slider" id="myRange"
+                            oninput="this.nextElementSibling.value = this.value">
+                        <output>50</output>
+                    </div>
+                </div>
+
                 <hr>
                 <br>
-                <h4>Will {{ home_assists.name }} get {{ home_assists.num_stats|round|int }} assists or more?</h4>
-                <input type="radio" name="bet5" value = "over" id="yes">
-                <label for="yes">Yes</label>
-                <input type="radio" name="bet5" value = "under" id="no">
-                <label for="no">No</label>
-                <h4>Will {{ away_assists.name }} get {{ away_assists.num_stats|round|int }} assists or more?</h4>
-                <input type="radio" name="bet6" value = "over" id="yes">
-                <label for="yes">Yes</label>
-                <input type="radio" name="bet6" value = "under" id="no">
-                <label for="no">No</label>
+                <div class="game_card">
+                    <h4>Will {{ home_assists.name }} get {{ home_assists.num_stats|round|int }} assists or more?</h4>
+                    <input type="radio" name="bet5" value="over" id="yes">
+                    <label for="yes">Yes</label>
+                    <input type="radio" name="bet5" value="under" id="no">
+                    <label for="no">No</label>
+                    <div class="slidecontainer">
+                        <input type="range" min="1" max="100" value="50" class="slider" id="myRange"
+                            oninput="this.nextElementSibling.value = this.value">
+                        <output>50</output>
+                    </div>
+                </div>
+                <br>
+                <div class="game_card">
+                    <h4>Will {{ away_assists.name }} get {{ away_assists.num_stats|round|int }} assists or more?</h4>
+                    <input type="radio" name="bet6" value="over" id="yes">
+                    <label for="yes">Yes</label>
+                    <input type="radio" name="bet6" value="under" id="no">
+                    <label for="no">No</label>
+                    <div class="slidecontainer">
+                        <input type="range" min="1" max="100" value="50" class="slider" id="myRange"
+                            oninput="this.nextElementSibling.value = this.value">
+                        <output>50</output>
+                    </div>
+                </div>
+
                 <hr>
-                    <button type = "submit" class = "btn btn-primary" > Submit Bet(s) </button>
+                <button type="submit" class="btn btn-primary"> Submit Bet(s) </button>
             </form>
         </div>
     </div>
 </div>
 
+{% endblock %}
+
+{% block script %}
+<script>
+    var slider = document.getElementById("range");
+    var output = document.getElementById("value");
+    var outputVarNo = document.getElementById("outputVar");
+
+    let update = () => output.innerHTML = slider.value;
+
+    slider.addEventListener('input', update);
+    update();
+</script>
 {% endblock %}

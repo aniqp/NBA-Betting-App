@@ -12,15 +12,15 @@
             <hr>
             <ul>
                 {% for k, v in games.items() %}
-                <div class="game-card" 
-                    style="background-image: linear-gradient(to right, rgba(206, 17, 65,0.5), rgba(0, 107, 182 ,0.5))">
+                <div class="game-card"
+                    style="background-image: linear-gradient(to right, rgba({{ v['away_team']['colour'][0] }}, {{ v['away_team']['colour'][1] }}, {{ v['away_team']['colour'][2] }}, 1), 
+                                                                       rgba({{ v['home_team']['colour'][0] }}, {{ v['home_team']['colour'][1] }}, {{ v['home_team']['colour'][2] }}, 1))">
                     <img style="max-width: 250px; max-height: 250px"
                         src="{{ url_for('static', filename='logos/' + v['away_team']['name'] + '_logo.png') }}">
                     <img style="max-width: 35px; max-height: 35px"
                         src="{{ url_for('static', filename='img/at_sign.png') }}">
                     <img style="max-width: 250px; max-height: 250px"
                         src="{{ url_for('static', filename='logos/' + v['home_team']['name'] + '_logo.png') }}">
-
                     <br>
                     <br>
                     <br>
@@ -32,7 +32,7 @@
                 </div>
                 <hr>
                 {% endfor %}
-      
+
             </ul>
         </div>
     </div>

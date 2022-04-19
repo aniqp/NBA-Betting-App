@@ -17,9 +17,9 @@
                     {% else %}
                     {{bet.player_name}} will get under {{bet.num_stats| round| int}} {{bet.statistic}}
                     {% endif %}
-                    <button type="button" class="close" onClick="deleteBet({{ bet.id }})">
+                    <button type="button" class="close" onClick="deleteBet('{{ bet.id }}')">
                         <span aria-hidden="true">&times;</span>
-                      </button>
+                    </button>
                 </li>
                 {% endfor %}
             </p>
@@ -27,4 +27,24 @@
     </div>
 </div>
 
+{% with messages = get_flashed_messages(with_categories = true) %}
+{% if messages %}
+{% for category, message in messages %}
+{% if category == 'error' %}
+<div class="alert alert-danger alter-dismissable fade show" role="alert">
+    {{ message }}
+</div>
+{% else %}
+<div class="alert alert-success alter-dismissable fade show" role="alert">
+    {{ message }}
+</div>
+{% endif %}
+{% endfor %}
+{% endif %}
+{% endwith %}
+
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript" src="{{ url_for('static', filename='js/index.js') }}"></script>
 {% endblock %}
