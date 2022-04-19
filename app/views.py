@@ -83,7 +83,9 @@ def games(game_id):
                 ))
                 db.create_all
                 db.session.commit()
+        return redirect('/')
         flash('Bet(s) made!', category = 'success')
+
 
     return render_template(
         "game.html",
