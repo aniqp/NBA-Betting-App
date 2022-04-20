@@ -2,13 +2,11 @@ import requests
 import pandas as pd
 import numpy as np
 
-# hi
-
-game_id = '0022101215'
-
-box_score_url = 'https://cdn.nba.com/static/json/liveData/boxscore/boxscore_' + game_id + '.json' #0022101190 = gameId
-
-headers  = {
+def determine_bet_outcome(data_dictionary):
+    game_id = data_dictionary.get('game_id')
+    box_score_url = 'https://cdn.nba.com/static/json/liveData/boxscore/boxscore_' + game_id + '.json' #0022101190 = gameId
+    
+    headers  = {
     'Connection': 'keep-alive',
     'Accept': 'application/json, text/plain, */*',
     'x-nba-stats-token': 'true',
@@ -19,22 +17,22 @@ headers  = {
     'Referer': 'https://stats.nba.com/',
     'Accept-Encoding': 'gzip, deflate, br',
     'Accept-Language': 'en-US,en;q=0.9',
-}
+    }
 
-response = requests.get(url = box_score_url, headers = headers).json()
+    response = requests.get(url = box_score_url, headers = headers).json()
 
-homeTeam = response['game']['homeTeam']
-awayTeam = response['game']['awayTeam']
+    # homeTeam = response['game']['homeTeam']
+    # awayTeam = response['game']['awayTeam']
 
-def get_box_score(team):
     count = 0
+    team = response['game'][data_dictionary.get('team')]
     players = team['players']
     array = []
     large_array = []
 
     for player in players:
         statistics = []
-        statistics.append(players[count]['nameI'])
+        statistics.append(players[count]['name'])
         array = players[count]['statistics']
         for key, value in array.items():
             statistics.append(value)
@@ -67,7 +65,7 @@ def get_box_score(team):
         'SCP',
         'DR',
         'OR',
-        'TR',
+        'REB',
         'STL',
         'FG3A',
         'FG3M',
@@ -84,20 +82,26 @@ def get_box_score(team):
     [   "NAME",
         "PTS",
         "AST",
-        "TR",
-        "BLK",
-        "STL",
-        "FG%",
-        "FG3%",
-        "TOV"
+        "REB"
         ]
     ]
 
-    print(nba_df_imp)
+    player_df = nba_df_imp[nba_df_imp['NAME'] == data_dictionary.get('name')]
+    
+    stat_to_compare = player_df[data_dictionary.get('statistic')].values[0]
+    
+    
+    compare_bet_to_boxscore = (stat_to_compare > round(data_dictionary.get('num_stats')))
 
-    #nba_df.to_csv('box_score.csv', index = False)
+    return compare_bet_to_boxscore == data_dictionary.get('over_statistic')
 
-get_box_score(homeTeam)
-print()
-get_box_score(awayTeam)
+# data_dict = {
+#     'game_id':"0042100152",
+#     'team': 'homeTeam',
+#     'name': 'Ja Morant',
+#     'statistic': 'PTS',
+#     'num_stats': 21,
+#     'over_statistic': True
+# }
+
 

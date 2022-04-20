@@ -49,7 +49,7 @@ def login():
         # if a user is found, check if password they typed in exists in the database
         if user:
             if check_password_hash(user.password, password):
-                flash('Logged in successfully!', category = 'success')
+                # flash('Logged in successfully!', category = 'success')
                 # remembers that user is logged in until they clear their cache
                 login_user(user, remember = True)
                 return redirect(url_for('index'))

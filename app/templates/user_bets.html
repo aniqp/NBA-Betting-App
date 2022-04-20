@@ -20,6 +20,17 @@
                     <button type="button" class="close" onClick="deleteBet('{{ bet.id }}')">
                         <span aria-hidden="true">&times;</span>
                     </button>
+                    <br>
+                    <button type="button" class="btn btn-primary" onClick = "checkBetStatus('{{ bet.id }}')">
+                        Check status of bet!
+                    </button>
+                    {% if bet.w_or_l is not none %}
+                        {% if bet.w_or_l == true %}    
+                        <p style = "color: rgb(0, 240, 160);">You won!</p>
+                        {%else %}
+                        <p style = "color: red;">You lost.</p>
+                        {% endif %}
+                    {% endif %}
                 </li>
                 {% endfor %}
             </p>
@@ -47,4 +58,19 @@
 
 {% block script %}
 <script type="text/javascript" src="{{ url_for('static', filename='js/index.js') }}"></script>
+
+<script>
+
+function checkBetStatus(betID) {
+    
+    fetch("/check-bet-status", {
+        method: "POST",
+        body: JSON.stringify({betID: betID})
+    }).then((_res) => {
+        window.location.href="/my-bets";
+    });
+    
+    console.log(betID)
+
+}</script>
 {% endblock %}

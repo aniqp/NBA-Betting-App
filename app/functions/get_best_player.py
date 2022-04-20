@@ -59,7 +59,6 @@ def get_best_player(team_id, stat):
 
     row1 = nba_df_imp.iloc[0] # getting highest stat player
 
-
     player_name = {     # saving to dictionary
         'player': row1['NAME'],
         'points': row1['PTS'],
@@ -77,67 +76,76 @@ def get_best_player(team_id, stat):
 
 today_games = todays_games()
 class BetCardPoints:
-    def __init__(self, name, points):
+    def __init__(self, name, points, team):
         # get best player from whichever team the user picks
         self.name = name
         self.statistic = 'PTS'
+        self.team = team
         self.num_stats = points
 
 class BetCardAssists:
-    def __init__(self, name, assists):
+    def __init__(self, name, assists, team):
         # get best player from whichever team the user picks
         self.name = name
         self.statistic = 'AST'
+        self.team = team
         self.num_stats = assists
 
 
 class BetCardRebounds:
-    def __init__(self, name, rebounds):
+    def __init__(self, name, rebounds, team):
         # get best player from whichever team the user picks
         self.name = name
         self.statistic = 'REB'
+        self.team = team
         self.num_stats = rebounds
 
 
 def create_points_card_away(game_id):
     obj = BetCardPoints(
         get_best_player(today_games[game_id]['away_team'], 'PTS')['player'],
-        get_best_player(today_games[game_id]['away_team'], 'PTS')['points']
+        get_best_player(today_games[game_id]['away_team'], 'PTS')['points'],
+        'awayTeam'
     )
     return obj
 
 def create_points_card_home(game_id):
     obj = BetCardPoints(
         get_best_player(today_games[game_id]['home_team'], 'PTS')['player'],
-        get_best_player(today_games[game_id]['home_team'], 'PTS')['points']
+        get_best_player(today_games[game_id]['home_team'], 'PTS')['points'],
+        'homeTeam'
     )
     return obj
 
 def create_rebounds_card_away(game_id):
     obj = BetCardRebounds(
         get_best_player(today_games[game_id]['away_team'], 'REB')['player'],
-        get_best_player(today_games[game_id]['away_team'], 'REB')['rebounds']
+        get_best_player(today_games[game_id]['away_team'], 'REB')['rebounds'],
+        'awayTeam'
     )
     return obj
 
 def create_rebounds_card_home(game_id):
     obj = BetCardRebounds(
         get_best_player(today_games[game_id]['home_team'], 'REB')['player'],
-        get_best_player(today_games[game_id]['home_team'], 'REB')['rebounds']
+        get_best_player(today_games[game_id]['home_team'], 'REB')['rebounds'],
+        'homeTeam'
     )
     return obj
 
 def create_assists_card_away(game_id):
     obj = BetCardAssists(
         get_best_player(today_games[game_id]['away_team'], 'AST')['player'],
-        get_best_player(today_games[game_id]['away_team'], 'AST')['assists']
+        get_best_player(today_games[game_id]['away_team'], 'AST')['assists'],
+        'awayTeam'
     )
     return obj
 
 def create_assists_card_home(game_id):
     obj = BetCardAssists(
         get_best_player(today_games[game_id]['home_team'], 'AST')['player'],
-        get_best_player(today_games[game_id]['home_team'], 'AST')['assists']
+        get_best_player(today_games[game_id]['home_team'], 'AST')['assists'],
+        'homeTeam'
     )
     return obj
 

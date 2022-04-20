@@ -8,6 +8,7 @@ import json
 from app.functions.todays_games import *
 from app.functions.get_team_credentials import *
 from app.functions.get_best_player import *
+from app.functions.determine_bet_outcome import *
 from app.functions.string_to_boolean_converter import *
 
 @app.route("/")
@@ -75,6 +76,7 @@ def games(game_id):
             if bet.get(list(bet.keys())[0]) is not None:
                 db.session.add(Bet(
                 game_id = game_id,
+                team = list(bet.keys())[0].team,
                 player_name = list(bet.keys())[0].name,
                 statistic = list(bet.keys())[0].statistic,
                 over_statistic = convert_string_to_boolean((bet.get(list(bet.keys())[0]))),
@@ -83,8 +85,9 @@ def games(game_id):
                 ))
                 db.create_all
                 db.session.commit()
+        
+        # flash('Bet(s) made!', category = 'success')
         return redirect('/')
-        flash('Bet(s) made!', category = 'success')
 
 
     return render_template(
@@ -115,4 +118,25 @@ def delete_bet():
             db.session.commit()
     
     return jsonify({})
+
+@app.route('/check-bet-status', methods = ['POST'])
+def check_bet_status():
+    bet = json.loads(request.data)
+    betID = bet['betID']
+    bet = Bet.query.get(betID)
+    if bet:
+        if bet.user_id == current_user.id:
+            data_dictionary = {
+                'name': bet.player_name,
+                'team': bet.team,
+                'statistic': bet.statistic,
+                'num_stats': bet.num_stats,
+                'over_statistic': bet.over_statistic,
+                'game_id': bet.game_id
+            }
+        
+        bet.w_or_l = determine_bet_outcome(data_dictionary)
+        db.session.commit()
+
+    return bet.w_or_l
     
