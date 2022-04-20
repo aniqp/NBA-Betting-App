@@ -91,17 +91,39 @@ def determine_bet_outcome(data_dictionary):
     stat_to_compare = player_df[data_dictionary.get('statistic')].values[0]
     
     
-    compare_bet_to_boxscore = (stat_to_compare > round(data_dictionary.get('num_stats')))
+    compare_boxscore_to_avg = (stat_to_compare > round(data_dictionary.get('num_stats')))
 
-    return compare_bet_to_boxscore == data_dictionary.get('over_statistic')
+    game_status = response['game']['gameStatusText']
 
-# data_dict = {
-#     'game_id':"0042100152",
-#     'team': 'homeTeam',
-#     'name': 'Ja Morant',
-#     'statistic': 'PTS',
-#     'num_stats': 21,
-#     'over_statistic': True
-# }
+    outcome_stat_dict = {}
+    if compare_boxscore_to_avg == False:
+        if game_status == 'Final':
+            outcome_stat_dict.update({
+                'bet_outcome': compare_boxscore_to_avg == data_dictionary.get('over_statistic'),
+                'num_stats': stat_to_compare
+            })
+            return outcome_stat_dict
+        else:
+            return "The game isn't over yet, " + data_dictionary['name'] + " has " + stat_to_compare + " " + data_dictionary['statistic']
+    else:
+        outcome_stat_dict.update({
+            'bet_outcome': compare_boxscore_to_avg == data_dictionary.get('over_statistic'),
+            'num_stats': stat_to_compare
+        })
+        return outcome_stat_dict
+        
+    # return compare_bet_to_boxscore == data_dictionary.get('over_statistic')
+
+data_dict = {
+    'game_id':"0042100152",
+    'team': 'homeTeam',
+    'name': 'Ja Morant',
+    'statistic': 'PTS',
+    'num_stats': 21,
+    'over_statistic': True
+}
+
+print(determine_bet_outcome(data_dict))
+
 
 

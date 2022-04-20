@@ -11,6 +11,7 @@ from app.functions.get_best_player import *
 from app.functions.determine_bet_outcome import *
 from app.functions.string_to_boolean_converter import *
 
+
 @app.route("/")
 @login_required
 def index():
@@ -135,8 +136,10 @@ def check_bet_status():
                 'game_id': bet.game_id
             }
         
-        bet.w_or_l = determine_bet_outcome(data_dictionary)
-        db.session.commit()
+        outcome = determine_bet_outcome(data_dictionary)
+        if outcome['bet_outcome'] == False or outcome['bet_outcome'] == True:
+            bet.w_or_l = outcome['bet_outcome']
+            db.session.commit()
 
-    return bet.w_or_l
+    return render_template("user_bets.html", user = current_user)
     
