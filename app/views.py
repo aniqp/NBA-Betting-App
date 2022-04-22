@@ -147,13 +147,20 @@ def check_bet_status():
 
             outcome = determine_bet_outcome(data_dictionary)
             if bet.game_status == 2:
-                if outcome['bet_outcome'] == True:
+                bet.stats_actual = int(outcome['num_stats'])
+                db.session.commit()
+                if outcome['bet_outcome'] == True and bet.over_statistic == True:
                     bet.w_or_l = outcome['bet_outcome']
-                    bet.stats_actual = int(outcome['num_stats'])
                     try:
                         db.session.commit()
                     except IntegrityError:
                         db.session.rollback()
+                elif outcome['bet_outcome'] == False and bet.over_statistic == False:
+                    bet.w_or_l = outcome['bet_outcome']
+                    try:
+                        db.session.commit()
+                    except IntegrityError:
+                        db.session.rollback()                
             elif bet.game_status == 3:
                 bet.w_or_l = outcome['bet_outcome']
                 bet.stats_actual = int(outcome['num_stats'])
