@@ -24,7 +24,7 @@
                     <button type="button" class="btn btn-primary" onClick = "checkBetStatus('{{ bet.id }}')">
                         Check status of bet!
                     </button>
-                    {% if bet.game_status == 1 %}
+                    {% if bet.game_status is none or bet.game_status == 1  %}
                         <p>The game hasn't started yet</p>
                     {% elif bet.game_status == 2 and bet.w_or_l is none %}
                         <p style="color: rgb(202, 181, 28)">The game is in progress. {{ bet.player_name }} currently has {{ bet.stats_actual }} {{ bet.statistic }}</p>

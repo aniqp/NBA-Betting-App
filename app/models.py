@@ -21,10 +21,10 @@ class Bet(db.Model):
     w_or_l = db.Column(db.Boolean, default = None, nullable = True)
     game_status = db.Column(db.Integer, nullable = True)
     stats_actual = db.Column(db.Integer, nullable = True)
+    wagered_amount = db.Column(db.Integer, nullable = True)
+    net_revenue = db.Column(db.Integer, nullable = True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     
-    
-
 # when you want to make a new database model (store a different type of object), have it inherit from db.model
 # usermixin just for user model
 class User(db.Model, UserMixin):
@@ -34,5 +34,6 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(150))
     first_name = db.Column(db.String(150))
     last_name = db.Column(db.String(150))
+    swishcoins = db.Column(db.Integer, default = 100)
     # Can access all of user's bets with this field
     bets = db.relationship('Bet')
