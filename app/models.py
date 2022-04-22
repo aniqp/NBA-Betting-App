@@ -1,10 +1,15 @@
 # from package import db object
+from enum import unique
+from sqlalchemy import UniqueConstraint
 from . import db
 from flask_login import UserMixin
 # func gets current date and time and will store that as the default date/time
 from sqlalchemy.sql import func
 
 class Bet(db.Model):
+    __table_args__ = (
+        db.UniqueConstraint('game_id', 'team', 'player_name', 'statistic', 'num_stats', 'user_id'),
+    )
     id = db.Column(db.Integer, primary_key = True)
     game_id = db.Column(db.String(50))
     team = db.Column(db.String(100))
@@ -14,7 +19,11 @@ class Bet(db.Model):
     num_stats = db.Column(db.Integer)
     date = db.Column(db.DateTime(timezone=True), server_default=func.now())
     w_or_l = db.Column(db.Boolean, default = None, nullable = True)
+    game_status = db.Column(db.Integer, nullable = True)
+    stats_actual = db.Column(db.Integer, nullable = True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    
+    
 
 # when you want to make a new database model (store a different type of object), have it inherit from db.model
 # usermixin just for user model

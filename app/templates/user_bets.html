@@ -24,11 +24,15 @@
                     <button type="button" class="btn btn-primary" onClick = "checkBetStatus('{{ bet.id }}')">
                         Check status of bet!
                     </button>
-                    {% if bet.w_or_l is not none %}
+                    {% if bet.game_status == 1 %}
+                        <p>The game hasn't started yet</p>
+                    {% elif bet.game_status == 2 and bet.w_or_l is none %}
+                        <p style="color: rgb(202, 181, 28)">The game is in progress. {{ bet.player_name }} currently has {{ bet.num_stats }} {{ bet.statistic }}</p>
+                    {% elif bet.game_status == 3 %}
                         {% if bet.w_or_l == true %}    
-                        <p style = "color: rgb(0, 240, 160);">You won!</p>
+                        <p style = "color: rgb(0, 240, 160);">You won! {{ bet.player_name }} got {{ bet.num_stats }} {{ bet.statistic }}!</p>
                         {% else %}
-                        <p style = "color: red;">You suck.</p>
+                        <p style = "color: red;">You lost. {{ bet.player_name }} only got {{ bet.num_stats }} {{ bet.statistic }}</p>
                         {% endif %}
                     {% endif %}
                 </li>
@@ -38,7 +42,7 @@
     </div>
 </div>
 
-{% with messages = get_flashed_messages(with_categories = true) %}
+<!-- {% with messages = get_flashed_messages(with_categories = true) %}
 {% if messages %}
 {% for category, message in messages %}
 {% if category == 'error' %}
@@ -52,7 +56,7 @@
 {% endif %}
 {% endfor %}
 {% endif %}
-{% endwith %}
+{% endwith %} -->
 
 {% endblock %}
 

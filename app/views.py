@@ -5,12 +5,13 @@ from flask_login import login_user, logout_user, login_required, current_user
 from .models import User, Bet
 from werkzeug.security import generate_password_hash, check_password_hash
 import json
+from sqlalchemy.exc import IntegrityError
 from app.functions.todays_games import *
 from app.functions.get_team_credentials import *
 from app.functions.get_best_player import *
 from app.functions.determine_bet_outcome import *
 from app.functions.string_to_boolean_converter import *
-
+from app.functions.get_game_status import *
 
 @app.route("/")
 @login_required
@@ -85,7 +86,10 @@ def games(game_id):
                 user_id = current_user.id
                 ))
                 db.create_all
-                db.session.commit()
+                try:
+                    db.session.commit()
+                except IntegrityError:
+                    db.session.rollback()
         
         # flash('Bet(s) made!', category = 'success')
         return redirect('/')
@@ -106,6 +110,7 @@ def games(game_id):
 
 @app.route("/my-bets")
 def my_bets():
+    # outcome = "hi"
     return render_template("user_bets.html", user = current_user)
 
 @app.route('/delete-bet', methods = ['POST'])
@@ -133,13 +138,27 @@ def check_bet_status():
                 'statistic': bet.statistic,
                 'num_stats': bet.num_stats,
                 'over_statistic': bet.over_statistic,
-                'game_id': bet.game_id
+                'game_id': bet.game_id,
+                'stats_actual': bet.stats_actual
             }
-        
-        outcome = determine_bet_outcome(data_dictionary)
-        if outcome['bet_outcome'] == False or outcome['bet_outcome'] == True:
-            bet.w_or_l = outcome['bet_outcome']
+
+            bet.game_status = get_game_status(bet.game_id)
             db.session.commit()
 
+            outcome = determine_bet_outcome(data_dictionary)
+            if bet.game_status == 2:
+                if outcome['bet_outcome'] == True:
+                    bet.w_or_l = outcome['bet_outcome']
+                    bet.stats_actual = int(outcome['num_stats'])
+                    try:
+                        db.session.commit()
+                    except IntegrityError:
+                        db.session.rollback()
+            elif bet.game_status == 3:
+                bet.w_or_l = outcome['bet_outcome']
+                bet.stats_actual = int(outcome['num_stats'])
+                try:
+                    db.session.commit()
+                except IntegrityError:
+                    db.session.rollback()
     return render_template("user_bets.html", user = current_user)
-    
