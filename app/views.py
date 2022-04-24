@@ -12,6 +12,7 @@ from app.functions.get_best_player import *
 from app.functions.determine_bet_outcome import *
 from app.functions.string_to_boolean_converter import *
 from app.functions.get_game_status import *
+from app.functions.update_user_swishcoins import *
 
 @app.route("/")
 @login_required
@@ -51,29 +52,29 @@ def games(game_id):
     if request.method == 'POST':
 
         home_pts_user_bet = request.form.get('bet1')
+        home_pts_bet_value = request.form.get('slider1')
         away_pts_user_bet = request.form.get('bet2')
+        away_pts_bet_value = request.form.get('slider2')
 
         home_rebounds_user_bet = request.form.get('bet3')
+        home_rebounds_bet_value = request.form.get('slider3')
         away_rebounds_user_bet = request.form.get('bet4')
+        away_rebounds_bet_value = request.form.get('slider4')
 
         home_assists_user_bet = request.form.get('bet5')
+        home_assists_bet_value = request.form.get('slider5')
         away_assists_user_bet = request.form.get('bet6')
+        away_assists_bet_value = request.form.get('slider6')
 
         bet_list = [
-         {home_pts: home_pts_user_bet},
-         {away_pts: away_pts_user_bet},
-         {home_rebounds: home_rebounds_user_bet},
-         {away_rebounds: away_rebounds_user_bet},
-         {home_assists: home_assists_user_bet},
-         {away_assists: away_assists_user_bet}
+        {home_pts: home_pts_user_bet, 'bet_amount': home_pts_bet_value},
+        {away_pts: away_pts_user_bet, 'bet_amount': away_pts_bet_value},
+        {home_rebounds: home_rebounds_user_bet, 'bet_amount': home_rebounds_bet_value},
+        {away_rebounds: away_rebounds_user_bet, 'bet_amount': away_rebounds_bet_value},
+        {home_assists: home_assists_user_bet, 'bet_amount': home_assists_bet_value},
+        {away_assists: away_assists_user_bet, 'bet_amount': away_assists_bet_value}
         ]
-  
-        # count = 0
-        # for bet in bet_list:
-        #     if bet.get(list(bet.keys())[count]) is not None:
-        #         print(type(convert_string_to_boolean(bet.get(list(bet.keys())[count]))))
-        # count +=1
-
+        bet_sum = []
         for bet in bet_list:
             if bet.get(list(bet.keys())[0]) is not None:
                 db.session.add(Bet(
@@ -82,16 +83,23 @@ def games(game_id):
                 player_name = list(bet.keys())[0].name,
                 statistic = list(bet.keys())[0].statistic,
                 over_statistic = convert_string_to_boolean((bet.get(list(bet.keys())[0]))),
+                wagered_amount = bet.get(list(bet.keys())[1]),
                 num_stats = list(bet.keys())[0].num_stats,
                 user_id = current_user.id
                 ))
+                bet_sum.append(int(bet.get(list(bet.keys())[1])))
                 db.create_all
                 try:
                     db.session.commit()
                 except IntegrityError:
                     db.session.rollback()
-        
-        # flash('Bet(s) made!', category = 'success')
+
+        # bet_sum = user_bet_sum(home_pts_bet_value, away_pts_bet_value, home_rebounds_bet_value, away_rebounds_bet_value, home_assists_bet_value, away_assists_bet_value)
+        user = current_user
+        user.swishcoins = user.swishcoins - int(sum(bet_sum))
+        db.session.commit()
+
+        flash('Bet(s) made!', category = 'success')
         return redirect('/')
 
 

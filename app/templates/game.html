@@ -25,7 +25,7 @@
                     <input type="radio" name="bet1" value="false" id="no">
                     <label for="no">No</label>
                     <div class="slidecontainer">
-                        <input type="range" min="1" max="100" value="50" class="slider" id="myRange"
+                        <input type="range" min="1" max="100" value="50" class="slider" id="range1" name="slider1"
                             oninput="this.nextElementSibling.value = this.value">
                         <output>50</output>
                     </div>
@@ -38,7 +38,7 @@
                     <input type="radio" name="bet2" value="false" id="no">
                     <label for="no">No</label>
                     <div class="slidecontainer">
-                        <input type="range" min="1" max="100" value="50" class="slider" id="myRange"
+                        <input type="range" min="1" max="100" value="50" class="slider" id="range2" name="slider2"
                             oninput="this.nextElementSibling.value = this.value">
                         <output>50</output>
                     </div>
@@ -53,9 +53,9 @@
                     <input type="radio" name="bet3" value="false" id="no">
                     <label for="no">No</label>
                     <div class="slidecontainer">
-                        <input type="range" min="1" max="100" value="50" class="slider" id="range"
+                        <input type="range" min="1" max="100" value="50" class="slider" id="range3" name="slider3"
                             oninput="this.nextElementSibling.value = this.value">
-                        Bet Amount: <span id="value"></span>
+                        <output>50</output>
                     </div>
                 </div>
                 <br>
@@ -67,7 +67,7 @@
                     <input type="radio" name="bet4" value="false" id="no">
                     <label for="no">No</label>
                     <div class="slidecontainer">
-                        <input type="range" min="1" max="100" value="50" class="slider" id="myRange"
+                        <input type="range" min="1" max="100" value="50" class="slider" id="range4" name="slider4"
                             oninput="this.nextElementSibling.value = this.value">
                         <output>50</output>
                     </div>
@@ -82,7 +82,7 @@
                     <input type="radio" name="bet5" value="under" id="no">
                     <label for="no">No</label>
                     <div class="slidecontainer">
-                        <input type="range" min="1" max="100" value="50" class="slider" id="myRange"
+                        <input type="range" min="1" max="100" value="50" class="slider" id="range5" name="slider5"
                             oninput="this.nextElementSibling.value = this.value">
                         <output>50</output>
                     </div>
@@ -95,7 +95,7 @@
                     <input type="radio" name="bet6" value="under" id="no">
                     <label for="no">No</label>
                     <div class="slidecontainer">
-                        <input type="range" min="1" max="100" value="50" class="slider" id="myRange"
+                        <input type="range" min="1" max="100" value="50" class="slider" id="range6" name="slider6"
                             oninput="this.nextElementSibling.value = this.value">
                         <output>50</output>
                     </div>
@@ -111,14 +111,5 @@
 {% endblock %}
 
 {% block script %}
-<script>
-    var slider = document.getElementById("range");
-    var output = document.getElementById("value");
-    var outputVarNo = document.getElementById("outputVar");
 
-    let update = () => output.innerHTML = slider.value;
-
-    slider.addEventListener('input', update);
-    update();
-</script>
 {% endblock %}
