@@ -1,4 +1,5 @@
 from app import app
+from app.functions.get_top_five_users import get_top_five_users
 from . import db
 from flask import render_template, request, flash, redirect, url_for, jsonify
 from flask_login import login_user, logout_user, login_required, current_user
@@ -176,4 +177,15 @@ def check_bet_status():
                     db.session.commit()
                 except IntegrityError:
                     db.session.rollback()
+    if bet.claimed == False:                
+        current_user.swishcoins = update_user_swishcoins(current_user.swishcoins, bet.wagered_amount, bet.w_or_l)
+        bet.claimed = True
+        db.session.commit()
     return render_template("user_bets.html", user = current_user)
+
+
+@app.route('/leaderboard')
+def leaderboard():
+    users = User.query.all()
+    sorted_users = get_top_five_users(users)
+    return render_template("leaderboard.html", user = current_user, users = users)

@@ -23,6 +23,7 @@ class Bet(db.Model):
     stats_actual = db.Column(db.Integer, nullable = True)
     wagered_amount = db.Column(db.Integer, nullable = True)
     net_revenue = db.Column(db.Integer, nullable = True)
+    claimed = db.Column(db.Boolean, default = False)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     
 # when you want to make a new database model (store a different type of object), have it inherit from db.model

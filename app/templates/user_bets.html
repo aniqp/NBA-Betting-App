@@ -21,21 +21,28 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                     <br>
-                    <button type="button" class="btn btn-primary" onClick="checkBetStatus('{{ bet.id }}')">
+                    <button type="button" class="btn btn-primary" onClick="
+                    fetch('/check-bet-status', {
+                        method: 'POST',
+                        body: JSON.stringify({betID: '{{ bet.id }}'})
+                    }).then((_res) => {
+                        window.location.href='my-bets';
+                    })";>
                         Check status of bet!
                     </button> 
-                    <p> Bet Amount = {{ bet.wagered_amount }} </p>
+                    <p> You bet: {{ bet.wagered_amount }} <img style="max-width: 30px; max-height: 30px;" src="{{ url_for('static', filename='img/CourtsideBets_logo.png') }}"></p>
+            
                     {% if bet.game_status is none or bet.game_status == 1  %}
                         <p>The game hasn't started yet</p>
                     {% elif bet.game_status == 2 and bet.w_or_l is none %}
                         <p style="color: rgb(202, 181, 28)">The game is in progress. {{ bet.player_name }} currently has {{ bet.stats_actual }} {{ bet.statistic }}</p>
                     {% elif bet.game_status == 2 and bet.w_or_l == true %}
-                        <p style="color: rgb(0, 240, 160)">You won! {{ bet.player_name }} currently has {{ bet.stats_actual }} {{ bet.statistic }}</p>  
+                        <p style="color: rgb(0, 240, 160)">You won! {{ bet.player_name }} currently has {{ bet.stats_actual }} {{ bet.statistic }} +{{ 2 * bet.wagered_amount }} <img style="max-width: 25px; max-height: 25px;" src="{{ url_for('static', filename='img/CourtsideBets_logo.png') }}"></p>  
                     {% elif bet.game_status == 2 and bet.w_or_l == false %}
                         <p style="color: red"> You lost. {{ bet.player_name }} currently has {{ bet.stats_actual }} {{ bet.statistic }}</p>                    
                     {% elif bet.game_status == 3 %}
                         {% if bet.w_or_l == true %}    
-                        <p style = "color: rgb(0, 240, 160);">You won! {{ bet.player_name }} got {{ bet.stats_actual }} {{ bet.statistic }}!</p>
+                        <p style = "color: rgb(0, 240, 160);">You won! {{ bet.player_name }} got {{ bet.stats_actual }} {{ bet.statistic }}! +{{ 2 * bet.wagered_amount }} <img style="max-width: 25px; max-height: 25px;" src="{{ url_for('static', filename='img/CourtsideBets_logo.png') }}"></p>
                         {% else %}
                         <p style = "color: red;">You lost. {{ bet.player_name }} got {{ bet.stats_actual }} {{ bet.statistic }}</p>
                         {% endif %}
@@ -50,11 +57,10 @@
 {% endblock %}
 
 {% block script %}
-<script type="text/javascript" src="{{ url_for('static', filename='js/index.js') }}"></script>
 
 <script>
-
 function checkBetStatus(betID) {
+    console.log("hi")
     fetch("/check-bet-status", {
         method: "POST",
         body: JSON.stringify({betID: betID})

@@ -1,0 +1,22 @@
+{% extends "main/base.html" %}
+
+{% block title %} Leaderboard {% endblock %}
+
+{% block main %}
+<table id="leaderboard">
+    <tr>
+        <th>Name</th>
+        <th>Swishcoins</th>
+    </tr>
+    {% for i in range(users|length) %}
+    <tr>
+        <td>
+            {{ users[i].first_name}}
+        </td>
+        <td>
+            {{users[i].swishcoins}}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
