@@ -187,5 +187,5 @@ def check_bet_status():
 @app.route('/leaderboard')
 def leaderboard():
     users = User.query.all()
-    sorted_users = get_top_five_users(users)
+    users = get_top_five_users(users)
     return render_template("leaderboard.html", user = current_user, users = users)
