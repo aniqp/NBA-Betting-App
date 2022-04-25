@@ -3,10 +3,13 @@
 {% block title %} Leaderboard {% endblock %}
 
 {% block main %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/leaderboard.css') }}">
+
+<br>
 <table id="leaderboard">
     <tr>
         <th>Name</th>
-        <th>Swishcoins</th>
+        <th><img style="max-width: 35px; max-height: 35px; padding-top: 5px" src="{{ url_for('static', filename='img/CourtsideBets_logo.png') }}"></th>
     </tr>
     {% for i in range(users|length) %}
     <tr>

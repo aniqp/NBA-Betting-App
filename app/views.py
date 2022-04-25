@@ -1,5 +1,5 @@
 from app import app
-from app.functions.get_top_five_users import get_top_five_users
+from app.functions.get_top_five_users import get_top_five_users, merge_sort_coins
 from . import db
 from flask import render_template, request, flash, redirect, url_for, jsonify
 from flask_login import login_user, logout_user, login_required, current_user
