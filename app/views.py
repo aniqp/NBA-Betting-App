@@ -96,7 +96,6 @@ def games(game_id):
                     flash('Bet(s) made!', category = 'success')
                 except IntegrityError:
                     db.session.rollback()
-                    bet_sum.remove(int(bet.get(list(bet.keys())[1])))
                     flash('You have already made a bet on this player\'s statline. Bet not stored.', category = 'error')
 
         # bet_sum = user_bet_sum(home_pts_bet_value, away_pts_bet_value, home_rebounds_bet_value, away_rebounds_bet_value, home_assists_bet_value, away_assists_bet_value)
