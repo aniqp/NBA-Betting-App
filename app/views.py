@@ -1,3 +1,4 @@
+from datetime import date
 from app import app
 from app.functions.get_top_five_users import get_top_five_users, merge_sort_coins
 from . import db
@@ -88,19 +89,20 @@ def games(game_id):
                 num_stats = list(bet.keys())[0].num_stats,
                 user_id = current_user.id
                 ))
-                bet_sum.append(int(bet.get(list(bet.keys())[1])))
                 db.create_all
                 try:
                     db.session.commit()
+                    bet_sum.append(int(bet.get(list(bet.keys())[1])))
+                    flash('Bet(s) made!', category = 'success')
                 except IntegrityError:
                     db.session.rollback()
+                    bet_sum.remove(int(bet.get(list(bet.keys())[1])))
+                    flash('You have already made a bet on this player\'s statline. Bet not stored.', category = 'error')
 
         # bet_sum = user_bet_sum(home_pts_bet_value, away_pts_bet_value, home_rebounds_bet_value, away_rebounds_bet_value, home_assists_bet_value, away_assists_bet_value)
         user = current_user
         user.swishcoins = user.swishcoins - int(sum(bet_sum))
         db.session.commit()
-
-        flash('Bet(s) made!', category = 'success')
         return redirect('/')
 
 
@@ -115,11 +117,10 @@ def games(game_id):
         home_team = home_team,
         away_team = away_team,
         user = current_user
-    )
+    ) 
 
 @app.route("/my-bets")
 def my_bets():
-    # outcome = "hi"
     return render_template("user_bets.html", user = current_user)
 
 @app.route('/delete-bet', methods = ['POST'])
