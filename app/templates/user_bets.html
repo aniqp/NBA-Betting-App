@@ -11,7 +11,7 @@
             <hr>
             <ul>
             </ul>
-            <p> {% for bet in user.bets %}
+            <p> {% for bet in user_recent_bets %}
                 <li>{% if bet.over_statistic == true %}
                     {{bet.player_name}} will get over {{bet.num_stats| round| int}} {{ bet.statistic }}
                     {% else %}

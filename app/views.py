@@ -6,6 +6,8 @@ from flask import render_template, request, flash, redirect, url_for, jsonify
 from flask_login import login_user, logout_user, login_required, current_user
 from .models import User, Bet
 from werkzeug.security import generate_password_hash, check_password_hash
+from datetime import date, timedelta
+from datetime import datetime
 import json
 from sqlalchemy.exc import IntegrityError
 from app.functions.todays_games import *
@@ -120,7 +122,20 @@ def games(game_id):
 
 @app.route("/my-bets")
 def my_bets():
-    return render_template("user_bets.html", user = current_user)
+    yesterday = date.today() - timedelta(days=1)
+    today = date.today()
+    min_time = datetime.min.time()
+    max_time = datetime.max.time()
+    yesterday_time = datetime.combine(yesterday, min_time)
+    today_time = datetime.combine(today, max_time)
+    recent_bets = Bet.query.filter(Bet.date.between(yesterday_time, today_time)).all()
+    user_recent_bets = []
+
+    for bet in recent_bets:
+        if bet.user_id == current_user.id:
+            user_recent_bets.append(bet)
+
+    return render_template("user_bets.html", user = current_user, user_recent_bets = user_recent_bets)
 
 @app.route('/delete-bet', methods = ['POST'])
 def delete_bet():
