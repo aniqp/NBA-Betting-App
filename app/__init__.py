@@ -10,7 +10,7 @@ app = Flask(__name__)
 app.secret_key = "v5mqvgwj"
 # tell program where DB is located
 ## app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgres://ufrfqubgmkgowq:64155caf82a7859afbacc172ad8d9f68ffcb3aed4a59ccdf3ddce903055449a0@ec2-3-223-213-207.compute-1.amazonaws.com:5432/d4k3172erih3k1'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://ufrfqubgmkgowq:64155caf82a7859afbacc172ad8d9f68ffcb3aed4a59ccdf3ddce903055449a0@ec2-3-223-213-207.compute-1.amazonaws.com:5432/d4k3172erih3k1'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 # define app to use with database
 db.init_app(app)
