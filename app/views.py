@@ -95,7 +95,6 @@ def games(game_id):
                 try:
                     db.session.commit()
                     bet_sum.append(int(bet.get(list(bet.keys())[1])))
-                    flash('Bet(s) made!', category = 'success')
                 except IntegrityError:
                     db.session.rollback()
                     flash('You have already made a bet on this player\'s statline. Bet not stored.', category = 'error')
@@ -104,6 +103,7 @@ def games(game_id):
         user = current_user
         user.swishcoins = user.swishcoins - int(sum(bet_sum))
         db.session.commit()
+        flash('Bet(s) made!', category = 'success')
         return redirect('/')
 
 
@@ -144,9 +144,14 @@ def delete_bet():
     bet = Bet.query.get(betID)
     if bet:
         if bet.user_id == current_user.id:
-            db.session.delete(bet)
-            db.session.commit()
-    
+            if get_game_status(bet.game_id) == 1:
+                current_user.swishcoins = current_user.swishcoins + bet.wagered_amount
+                db.session.commit()
+                db.session.delete(bet)
+                db.session.commit()
+            else:
+                flash('Game has already started, you cannot delete this bet!', category = 'ERROR')
+  
     return jsonify({})
 
 @app.route('/check-bet-status', methods = ['POST'])
