@@ -1,12 +1,8 @@
 *Created by Aniq Premji and Ethan Luk*
 
+This app enables users to bet on NBA players' statlines in their daily games, and receive virtual currency tokens as a reward for successful predictions.
 
-This app scrapes data from the NBA Stats API using Python's requests library to enable users to bet on players' statlines, and verify their
-
-A list of 5000 movies from IMDB are used in this project. Using a combination of the words in the 'keywords' and 'genre' columns from the dataset, each movie is represented as a vector, with each word representing a dimension. The cosine of the angle between the vectors is calculated to determine how similar the movies are.
-
-![NBA Betting Demo](bet_demo.png)
-
+Data is scraped from the NBA Stats API using Python's requests library to gain information about players' season averages and their statlines per game. A SQL database enables authentication and the creation of user accounts, as well as storage of user bets and each bet's corresponding information.
 
 # Getting Started
 
@@ -33,3 +29,17 @@ Next, create a virtual environment by executing the following code in the projec
 To activate the environment, run ```env\Scripts\activate``` on Windows and ```source env/bin/activate``` for Unix/MacOS.
 
 To install the packages required for the project, run ```py -m pip install -r requirements.txt``` on Windows and ```python3 -m pip install -r requirements.txt``` on Unix/MacOS.
+
+## Usage Guide
+In the terminal, run the ```flask run``` command. Click the link provided by the ```Running on:``` statement in the terminal to open the site. To get started, choose a game that you'd like to bet on. 
+
+![NBA Betting Demo1](game_demo.png)
+
+Select any number of the bets you'd like to make by clicking either yes/no, and using the slider to make a wager of how many coins you'd like to bet.
+
+![NBA Betting Demo2](bet_game_demo.png)
+
+
+Once you've submitted your bet, you can check the status of the bet and see if you've won! Successful bets will give you twice as many coins as you wagered.
+
+![NBA Betting Demo3](bet_demo.png)
